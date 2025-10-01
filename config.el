@@ -32,10 +32,12 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-(setq foom-font (font-spec :family "JetBrains Mono" :size 13))
-
-;; (setq foom-font (font-spec :family "Hack Nerd Font Mono" :size 13))
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'catppuccin)
+(setq catppuccin-flavor 'macchiato) ; or 'frappe 'latte, 'macchiato, or 'mocha
+(load-theme 'catppuccin t)
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 13))
+(setq doom-font (font-spec :famiry "Hack Nerd Font Moro" :size 13))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -43,9 +45,44 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/Library/Mobile Documents/com~apple~CloudDocs/orgFiles/")
+(setq org-agenda-files
+      (list
+        (concat org-directory "journal/")
+        (concat org-directory "tasks.org")
+        (concat org-directory "inbox.org")))
+(setq org-journal-date-prefix "#+TITLE: ")
+(after! org-journal
+  (setq org-journal-enable-agenda-integration t))
 
 
+(after! org
+  (add-to-list 'org-capture-templates
+               '("m" "Meeting (journal)" entry
+                 ;; wrapper ensures correct call to org-journal-new-entry
+                 (file+function "IGNORE" (lambda ()
+                                           (org-journal-new-entry t)))
+                 "* MEETING %^{Title} :MEETING:\n:PROPERTIES:\n:Project: %^{Project|Flex-Hydra|Flex-Mobile|Rona|Meijer|Base1}\n:Captured: %U\n:END:\n%?\n"))
+
+(setq org-agenda-custom-commands
+      '(("M" "All Meetings"
+         tags "MEETING"
+         ((org-agenda-overriding-header "Meetings (newest first)")
+          ;; Sort by time, descending (most recent first)
+          (org-agenda-sorting-strategy '(time-up))
+          ;; Show Project and Captured property inline
+          (org-agenda-prefix-format
+           " %t %-12:c %s [Project: %(or (org-entry-get nil \"Project\") \"?\")] [Captured: %(or (org-entry-get nil \"Captured\") \"-\")]")
+          (org-agenda-property-list '("Project" "Captured"))))))
+)
+
+
+;; Old basic meeting capture template that worked
+;; (after! org
+  ;; (add-to-list 'org-capture-templates
+  ;;              '("m" "Meeting" entry
+  ;;                (file+olp+datetree +org-capture-notes-file)
+  ;;                "* MEETING %?\n:PROPERTIES:\n:Project: %^{Project|Flex-Hydra|Flex-Mobile|Rona|Meijer|Base1}\n:END:\nEntered on %U\n")))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -77,7 +114,14 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;;
+;;
 ;; Persistently associate .ts/.tsx with tree-sitter TS modes
-(add-to-list 'auto-mode-alist '("\\.ts\\'"  . typescript-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.ts\\'"  . typescript-ts-mode))
+;; (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 
+;; * CODE LANGUAGE CONFIGS
+;; (add-hook 'typescript-mode-hook #'lsp)
+
+;; (use-package! minimap
+  ;; :hook (prog-mode . minimap-mode))
