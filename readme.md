@@ -13,3 +13,6 @@ Adds TS/TSX recipie
   (message "Added TypeScript/TSX/JS recipes to treesit-language-source-alist"))
 
 ```
+
+Code formatting for web
+``npm install -g prettier``

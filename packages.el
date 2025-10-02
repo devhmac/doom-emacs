@@ -53,3 +53,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 (package! catppuccin-theme)
+
+(when (modulep! +lsp)
+  (package! lsp-tailwindcss
+    :recipe (:host github :repo "merrickluo/lsp-tailwindcss")))

@@ -21,7 +21,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       ;; company           ; the ultimate code completion backend
        (corfu +orderless)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
@@ -65,7 +65,7 @@
        ;;parinfer          ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
-       (whitespace +guess +trim)  ; a butler for your whitespace
+       ;; (whitespace +guess +trim)  ; a butler for your whitespace
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
@@ -139,7 +139,7 @@
        ;;gdscript ; the language you waited for
        ;;(go +lsp) ; the hipster dialect
        (graphql +lsp) ; Give queries a REST (haskell +lsp) ;
-       ;a ; language that's lazier than I am hy ; readability of scheme w/ speed of
+                                        ;a ; language that's lazier than I am hy ; readability of scheme w/ speed of
        ;;python idris ; a language you can depend on
        json ; At least it ain't XML
        ;;janet ; Fun fact: Janet is me!

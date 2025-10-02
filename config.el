@@ -48,9 +48,9 @@
 (setq org-directory "~/Library/Mobile Documents/com~apple~CloudDocs/orgFiles/")
 (setq org-agenda-files
       (list
-        (concat org-directory "journal/")
-        (concat org-directory "tasks.org")
-        (concat org-directory "inbox.org")))
+       (concat org-directory "journal/")
+       (concat org-directory "tasks.org")
+       (concat org-directory "inbox.org")))
 (setq org-journal-date-prefix "#+TITLE: ")
 (after! org-journal
   (setq org-journal-enable-agenda-integration t))
@@ -64,25 +64,25 @@
                                            (org-journal-new-entry t)))
                  "* MEETING %^{Title} :MEETING:\n:PROPERTIES:\n:Project: %^{Project|Flex-Hydra|Flex-Mobile|Rona|Meijer|Base1}\n:Captured: %U\n:END:\n%?\n"))
 
-(setq org-agenda-custom-commands
-      '(("M" "All Meetings"
-         tags "MEETING"
-         ((org-agenda-overriding-header "Meetings (newest first)")
-          ;; Sort by time, descending (most recent first)
-          (org-agenda-sorting-strategy '(time-up))
-          ;; Show Project and Captured property inline
-          (org-agenda-prefix-format
-           " %t %-12:c %s [Project: %(or (org-entry-get nil \"Project\") \"?\")] [Captured: %(or (org-entry-get nil \"Captured\") \"-\")]")
-          (org-agenda-property-list '("Project" "Captured"))))))
-)
+  (setq org-agenda-custom-commands
+        '(("M" "All Meetings"
+           tags "MEETING"
+           ((org-agenda-overriding-header "Meetings (newest first)")
+            ;; Sort by time, descending (most recent first)
+            (org-agenda-sorting-strategy '(time-up))
+            ;; Show Project and Captured property inline
+            (org-agenda-prefix-format
+             " %t %-12:c %s [Project: %(or (org-entry-get nil \"Project\") \"?\")] [Captured: %(or (org-entry-get nil \"Captured\") \"-\")]")
+            (org-agenda-property-list '("Project" "Captured"))))))
+  )
 
 
 ;; Old basic meeting capture template that worked
 ;; (after! org
-  ;; (add-to-list 'org-capture-templates
-  ;;              '("m" "Meeting" entry
-  ;;                (file+olp+datetree +org-capture-notes-file)
-  ;;                "* MEETING %?\n:PROPERTIES:\n:Project: %^{Project|Flex-Hydra|Flex-Mobile|Rona|Meijer|Base1}\n:END:\nEntered on %U\n")))
+;; (add-to-list 'org-capture-templates
+;;              '("m" "Meeting" entry
+;;                (file+olp+datetree +org-capture-notes-file)
+;;                "* MEETING %?\n:PROPERTIES:\n:Project: %^{Project|Flex-Hydra|Flex-Mobile|Rona|Meijer|Base1}\n:END:\nEntered on %U\n")))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -124,4 +124,4 @@
 ;; (add-hook 'typescript-mode-hook #'lsp)
 
 ;; (use-package! minimap
-  ;; :hook (prog-mode . minimap-mode))
+;; :hook (prog-mode . minimap-mode))
